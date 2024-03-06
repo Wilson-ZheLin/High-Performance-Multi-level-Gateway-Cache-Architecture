@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: zhelin-cache
+  profiles:
+    active: dev
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: assign_id    # 全局分布式id（雪花算法）
+      update-strategy: not_empty
+    banner: false
+  mapper-locations: classpath*:/mapper/*.xml
+
+
+pagehelper:
+  helper-dialect: MYSQL
+  support-methods-arguments: true
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
