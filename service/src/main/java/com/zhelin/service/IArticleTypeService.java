@@ -11,6 +11,6 @@ import com.zhelin.pojo.ArticleType;
  * @author zhelin
  * @since 2024-03-06
  */
-public interface IArticleTypeService {
+public interface IArticleTypeService extends IService<ArticleType> {
 
 }

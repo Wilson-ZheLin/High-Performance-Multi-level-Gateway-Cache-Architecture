@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2024-03-06
  */
 @Service
-public class ArticleTypeServiceImpl implements IArticleTypeService {
+public class ArticleTypeServiceImpl extends ServiceImpl<ArticleTypeMapper, ArticleType> implements IArticleTypeService  {
 
 }
