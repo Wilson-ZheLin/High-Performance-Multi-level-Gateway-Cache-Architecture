@@ -123,21 +123,43 @@ public class ArticleController {
     }
 
     @GetMapping("update")
-    public Object update() {
-
+    public Object update(String id) throws InterruptedException {
         Article article = new Article();
-        article.setId("1664459926468087810");
+        article.setId(id);
         article.setTitle("标题111");
         article.setContent("");
 
+        // 0. 删除Redis内容
+        String articleKeyRedis = "REDIS_ARTICLE:" + id;
+        redis.del(articleKeyRedis);
+
+        // 1. 更新数据库
         articleService.updateArticle(article);
+
+        // 缓存双删策略
+        Thread.sleep(200);
+        redis.del(articleKeyRedis);
+
+        // 2. 更新Redis
+//        Article articleReal = articleService.queryArticleDetail(id);
+//        String articleJson = JsonUtils.objectToJson(articleReal);
+//        redis.set(articleKeyRedis, articleJson);
 
         return "ok";
     }
 
     @GetMapping("delete")
-    public Object delete(String id) {
+    public Object delete(String id) throws InterruptedException {
+        // 0. 删除Redis内容
+        String articleKeyRedis = "REDIS_ARTICLE:" + id;
+        redis.del(articleKeyRedis);
+
+        // 1. 删除数据库
         articleService.deleteArticle(id);
+
+        // 缓存双删策略
+        Thread.sleep(200);
+        redis.del(articleKeyRedis);
 
         return "delete ok";
     }

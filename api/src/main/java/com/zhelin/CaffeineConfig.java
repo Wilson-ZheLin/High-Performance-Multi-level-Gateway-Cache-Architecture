@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 // 本地缓存配置类
 @Configuration
@@ -21,6 +22,8 @@ public class CaffeineConfig {
     public Cache<String, Article> cache() {
         return Caffeine.newBuilder()
                 .initialCapacity(10)    // 初始的缓存空间大小
+                .expireAfterWrite(10, TimeUnit.SECONDS)     // 过期时间
+//                .expireAfterAccess()    // 过期时间
                 .maximumSize(100)       // 最大上限缓存个数
                 .build();
     }
