@@ -1,0 +1,8 @@
+FROM openjdk:17
+EXPOSE 8080
+MAINTAINER zhe
+
+VOLUME /mydata
+ADD Cache.jar /Cache.jar
+RUN bash -c 'touch /Cache.jar'
+ENTRYPOINT ["java","-jar","/Cache.jar"]
